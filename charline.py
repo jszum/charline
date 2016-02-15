@@ -6,19 +6,19 @@ import sys
 ip = sys.argv[1]
 filename = sys.argv[2]
 
-# -c client, -p port, -P parallel, -i interval, -f format_output,
-
+# iperf3 -c 192.168.1.1 -P 1 -i 1 -p 5201 -f m -t 10
 tcp = ["iperf3", "-c", ip,  # server address
        "-p", "5201",        # server port
        "-P", "1",           # parallel process
        "-i", "1",           # intervals
        "-f", "m",           # format output m = Mbits
-       "-t", "10",          # experiment time
+       "-t", "10",          # experiment time (-n experiments bytes)
        "-l", "56.0K",       # buffer length
        "-w", "64.0K",       # tcp window size
        "-M", "1400B",       # max segment size
        "-N"]                # tcp no delay
 
+# iperf3 -c 192.168.1.1 -u -P 1 -i 1 -p 5201 -f m -b 1.0M -t 10
 udp = ["iperf3", "-c", ip,  # server address
        "-p", "5201",        # server port
        "-u",                # use udp protocol
