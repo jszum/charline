@@ -40,17 +40,30 @@ def execute_scenario(scenario):
     return output
 
 
-def main():
+def save_experiment(title, result, file):
+    stars = "*"*15 + "\n"
 
+    final_text = stars + title + stars + result + "\n"*3
+
+    f = open(file, 'a')
+    f.write(final_text)
+    f.close()
+
+
+def main():
     scenarios = []
     scenarios.append(tcp)
     scenarios.append(udp)
 
+    counter = 0
     for scenario in scenarios:
+        counter += 1
         title = str(scenario) + "\n"
         output = execute_scenario(scenario)
 
-        print output
+        print "Scenario " + str(counter) + " DONE"
+        save_experiment(title, output, filename)
 
 
-main()
+if __name__ == "__main__":
+    main()
