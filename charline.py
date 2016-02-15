@@ -14,8 +14,10 @@ tcp = ["iperf3", "-c", ip,  # server address
        "-i", "1",           # intervals
        "-f", "m",           # format output m = Mbits
        "-t", "10",          # experiment time
-       "-l", "56.0K"]       # buffer length
-
+       "-l", "56.0K",       # buffer length
+       "-w", "64.0K",       # tcp window size
+       "-M", "1400B",       # max segment size
+       "-N"]                # tcp no delay
 
 udp = ["iperf3", "-c", ip,  # server address
        "-p", "5201",        # server port
@@ -24,7 +26,9 @@ udp = ["iperf3", "-c", ip,  # server address
        "-i", "1",           # intervals
        "-f", "m",           # format output m = Mbits
        "-t", "10",          # experiment time
-       "-b", "1.0M"]        # bandwith
+       "-b", "1.0M",        # bandwith
+       "-w", "64.0K",       # udp buffer size
+       "-l", "1400B"]       # udp packet size
 
 
 def execute_scenario(scenario):
