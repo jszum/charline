@@ -6,6 +6,21 @@ import sys
 ip = sys.argv[1]
 filename = sys.argv[2]
 
+#mtu to be measured
+mtu1 = "1500B"
+mtu2 = "750B"
+mtu3 = "375B"
+mtu4 = "187B"
+
+#then mtu=1500 and...
+window1 = "64.0K"
+window2 = "32.0K"
+window3 = "16.0K"
+window4 = "8.0K"
+
+# bytes = 1M - 100K
+# time = ~10min
+
 # iperf3 -c 192.168.1.1 -P 1 -i 1 -p 5201 -f m -t 10
 tcp = ["iperf3", "-c", ip,  # server address
        "-p", "5201",        # server port
@@ -25,7 +40,7 @@ udp = ["iperf3", "-c", ip,  # server address
        "-P", "1",           # parallel process
        "-i", "1",           # intervals
        "-f", "m",           # format output m = Mbits
-       "-t", "10",          # experiment time
+       "-t", "10",          # experiment time (-n experiments bytes)
        "-b", "1.0M",        # bandwith
        "-w", "64.0K",       # udp buffer size
        "-l", "1400B"]       # udp packet size
