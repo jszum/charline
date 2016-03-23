@@ -45,7 +45,7 @@ udpex = ["iperf3", "-c", ip,  # server address
        "-w", "64.0K",       # udp buffer size
        "-l", "1400B"]       # udp packet size
 
-String size = "10M"
+size = "10M"
 
 tcp = []
 tcp.append(["iperf3", "-c", ip, "-p", "5201", "-P", "1", "-i", "1",
@@ -67,6 +67,24 @@ tcp.append(["iperf3", "-c", ip, "-p", "5201", "-P", "1", "-i", "1",
           "-f", "m", "-n", size, "-w", "8.0K", "-M", "1500B", "-N"])
 
 
+bandwith = "1000.0M"
+udp = []
+udp.append(["iperf3", "-c", ip, "-p", "5201", "-u", "-P", "1", "-i", "1",
+        "-f", "m", "-n", size, "-l", "1500B", "-b", bandwith])
+udp.append(["iperf3", "-c", ip, "-p", "5201", "-u", "-P", "1", "-i", "1",
+        "-f", "m", "-n", size, "-l", "750B", "-b", bandwith])
+udp.append(["iperf3", "-c", ip, "-p", "5201", "-u", "-P", "1", "-i", "1",
+        "-f", "m", "-n", size, "-l", "375B", "-b", bandwith])
+udp.append(["iperf3", "-c", ip, "-p", "5201", "-u", "-P", "1", "-i", "1",
+        "-f", "m", "-n", size, "-l", "187B", "-b", bandwith])
+
+udp.append(["iperf3", "-c", ip, "-p", "5201", "-u", "-P", "1", "-i", "1",
+        "-f", "m", "-n", size, "-w", "32.0K", "-l", "1500B", "-b", bandwith])
+udp.append(["iperf3", "-c", ip, "-p", "5201", "-u", "-P", "1", "-i", "1",
+        "-f", "m", "-n", size, "-w", "16.0K", "-l", "1500B", "-b", bandwith])
+udp.append(["iperf3", "-c", ip, "-p", "5201", "-u", "-P", "1", "-i", "1",
+        "-f", "m", "-n", size, "-w", "8.0K", "-l", "1500B", "-b", bandwith])
+
 def execute_scenario(scenario):
 
     process = Popen(scenario, stdout=PIPE)
@@ -85,12 +103,20 @@ def save_experiment(title, result, file):
     f.write(final_text)
     f.close()
 
-def add_scenarios(scenarios_array):
+
+def add_tcp(scenarios_array):
     for element in tcp:
         scenarios_array.append(element)
 
+
+def add_udp(scenarios_array):
     for element in udp:
         scenarios_array.append(element)
+
+
+def add_scenarios(scenarios_array):
+    add_tcp(scenarios_array)
+    add_udp(scenarios_array)
 
 
 def main():
