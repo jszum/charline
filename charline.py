@@ -49,34 +49,46 @@ def save_experiment(title, result, file):
     f.close()
 
 
-def add_scenarios(scenarios_array):
+def add_scenarios(scenarios_array, input_data):
+
+    if input_data == "0":
+            input_data = "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16"
+
+    numbers = input_data.split(",")
+
+    counter = 1
+
     for element in test_cases:
-        scenarios_array.append(element.get_command())
+
+        if str(counter) in numbers:
+            scenarios_array.append(element)
+        counter += 1
 
 def menu():
     counter = 1
-
     for scenario in test_cases:
         print str(counter) + "\t" + scenario.get_desc()
         counter += 1
 
-    input_data = raw_input()
+    input_data = raw_input("Type the scenarios to be executed (eg. 1,2,4 - coma is a separator) "
+                           "[0 = execute all scenarios] :\n")
 
     return input_data
 
 def main():
 
-    menu()
     scenarios = []
-    add_scenarios(scenarios)
+    running_cases = menu()
+
+    add_scenarios(scenarios, running_cases)
 
     counter = 0
     for scenario in scenarios:
         counter += 1
-        title = str(scenario) + "\n"
-        output = execute_scenario(scenario)
+        title = str(scenario.get_command()) + "\n" + scenario.get_desc() + "\n"
+        output = execute_scenario(scenario.get_command())
 
-        print "Scenario " + str(counter) + " DONE"
+        print "Scenario " + str(counter) + "/" + str(len(scenarios)) + " DONE"
         save_experiment(title, output, filename)
 
 

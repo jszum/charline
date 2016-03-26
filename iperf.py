@@ -14,6 +14,9 @@ class IperfScenario:
     def get_command(self):
         return self.command
 
+    def get_desc(self):
+        return self.desc
+
 ip = sys.argv[1]
 timer = str(int(sys.argv[2]))
 filename = str(datetime.datetime.now())[0:-7]
