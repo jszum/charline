@@ -2,24 +2,8 @@
 
 from subprocess import Popen, PIPE
 import sys
+from iperf import *
 
-ip = sys.argv[1]
-filename = sys.argv[2]
-
-#mtu to be measured
-# mtu1 = "1500B"
-# mtu2 = "750B"
-# mtu3 = "375B"
-# mtu4 = "187B"
-
-#then mtu=1500 and...
-# window1 = "64.0K"
-# window2 = "32.0K"
-# window3 = "16.0K"
-# window4 = "8.0K"
-
-# bytes = 1M - 100K
-# time = ~10min
 
 # iperf3 -c 192.168.1.1 -P 1 -i 1 -p 5201 -f m -t 10
 tcpex = ["iperf3", "-c", ip,  # server address
@@ -45,45 +29,6 @@ udpex = ["iperf3", "-c", ip,  # server address
        "-w", "64.0K",       # udp buffer size
        "-l", "1400B"]       # udp packet size
 
-size = "10M"
-
-tcp = []
-tcp.append(["iperf3", "-c", ip, "-p", "5201", "-P", "1", "-i", "1",
-          "-f", "m", "-n", size, "-M", "1500B", "-N"])
-tcp.append(["iperf3", "-c", ip, "-p", "5201", "-P", "1", "-i", "1",
-          "-f", "m", "-n", size, "-M", "750B", "-N"])
-tcp.append(["iperf3", "-c", ip, "-p", "5201", "-P", "1", "-i", "1",
-          "-f", "m", "-n", size, "-M", "375B", "-N"])
-tcp.append(["iperf3", "-c", ip, "-p", "5201", "-P", "1", "-i", "1",
-          "-f", "m", "-n", size, "-M", "187B", "-N"])
-
-tcp.append(["iperf3", "-c", ip, "-p", "5201", "-P", "1", "-i", "1",
-          "-f", "m", "-n", size, "-w", "64.0K", "-M", "1500B", "-N"])
-tcp.append(["iperf3", "-c", ip, "-p", "5201", "-P", "1", "-i", "1",
-          "-f", "m", "-n", size, "-w", "32.0K", "-M", "1500B", "-N"])
-tcp.append(["iperf3", "-c", ip, "-p", "5201", "-P", "1", "-i", "1",
-          "-f", "m", "-n", size, "-w", "16.0K", "-M", "1500B", "-N"])
-tcp.append(["iperf3", "-c", ip, "-p", "5201", "-P", "1", "-i", "1",
-          "-f", "m", "-n", size, "-w", "8.0K", "-M", "1500B", "-N"])
-
-
-bandwith = "1000.0M"
-udp = []
-udp.append(["iperf3", "-c", ip, "-p", "5201", "-u", "-P", "1", "-i", "1",
-        "-f", "m", "-n", size, "-l", "1500B", "-b", bandwith])
-udp.append(["iperf3", "-c", ip, "-p", "5201", "-u", "-P", "1", "-i", "1",
-        "-f", "m", "-n", size, "-l", "750B", "-b", bandwith])
-udp.append(["iperf3", "-c", ip, "-p", "5201", "-u", "-P", "1", "-i", "1",
-        "-f", "m", "-n", size, "-l", "375B", "-b", bandwith])
-udp.append(["iperf3", "-c", ip, "-p", "5201", "-u", "-P", "1", "-i", "1",
-        "-f", "m", "-n", size, "-l", "187B", "-b", bandwith])
-
-udp.append(["iperf3", "-c", ip, "-p", "5201", "-u", "-P", "1", "-i", "1",
-        "-f", "m", "-n", size, "-w", "32.0K", "-l", "1500B", "-b", bandwith])
-udp.append(["iperf3", "-c", ip, "-p", "5201", "-u", "-P", "1", "-i", "1",
-        "-f", "m", "-n", size, "-w", "16.0K", "-l", "1500B", "-b", bandwith])
-udp.append(["iperf3", "-c", ip, "-p", "5201", "-u", "-P", "1", "-i", "1",
-        "-f", "m", "-n", size, "-w", "8.0K", "-l", "1500B", "-b", bandwith])
 
 def execute_scenario(scenario):
 
@@ -104,19 +49,9 @@ def save_experiment(title, result, file):
     f.close()
 
 
-def add_tcp(scenarios_array):
-    for element in tcp:
-        scenarios_array.append(element)
-
-
-def add_udp(scenarios_array):
-    for element in udp:
-        scenarios_array.append(element)
-
-
 def add_scenarios(scenarios_array):
-    add_tcp(scenarios_array)
-    add_udp(scenarios_array)
+    for element in test_cases:
+        scenarios_array.append(element.get_command())
 
 
 def main():
