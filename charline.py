@@ -53,8 +53,20 @@ def add_scenarios(scenarios_array):
     for element in test_cases:
         scenarios_array.append(element.get_command())
 
+def menu():
+    counter = 1
+
+    for scenario in test_cases:
+        print str(counter) + "\t" + scenario.get_desc()
+        counter += 1
+
+    input_data = raw_input()
+
+    return input_data
 
 def main():
+
+    menu()
     scenarios = []
     add_scenarios(scenarios)
 
