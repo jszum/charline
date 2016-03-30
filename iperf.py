@@ -18,7 +18,7 @@ class IperfScenario:
         return self.desc
 
 ip = sys.argv[1]
-timer = str(int(sys.argv[2]))
+timer = str(int(sys.argv[2])*60)
 filename = str(datetime.datetime.now())[0:-7]
 bandwith = "1000.0M"
 
