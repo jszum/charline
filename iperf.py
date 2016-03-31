@@ -1,4 +1,5 @@
 import sys
+import os
 import datetime
 import copy
 
@@ -18,8 +19,17 @@ class IperfScenario:
         return self.desc
 
 ip = sys.argv[1]
-timer = str(int(sys.argv[2])*60)
-filename = str(datetime.datetime.now())[0:-7]
+
+option = sys.argv[2][-1:]
+
+if option == "m":
+	minutes = sys.argv[2][:-1]
+	timer = str(int(minutes)*60)
+else:
+	timer = str(int(sys.argv[2]))
+
+directory = str(datetime.datetime.now())[0:-7]
+os.mkdir(directory, 0755)
 
 bandwith = "1000.0M"
 reporting_interval = "1"

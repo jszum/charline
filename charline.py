@@ -89,6 +89,9 @@ def main():
         output = execute_scenario(scenario.get_command())
 
         print "Scenario " + str(counter) + "/" + str(len(scenarios)) + " DONE"
+	
+	filename = directory + "/"+scenario.get_desc()
+
         save_experiment(title, output, filename)
 
 
