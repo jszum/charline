@@ -23,8 +23,12 @@ ip = sys.argv[1]
 option = sys.argv[2][-1:]
 
 if option == "m":
+
 	minutes = sys.argv[2][:-1]
 	timer = str(int(minutes)*60)
+elif option == "s":
+	seconds = sys.argv[2][:-1]
+	timer = str(int(seconds))
 else:
 	timer = str(int(sys.argv[2]))
 
